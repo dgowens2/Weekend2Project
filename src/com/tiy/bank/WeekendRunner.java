@@ -44,11 +44,11 @@ public class WeekendRunner {
             mainMenuChoice = Integer.valueOf(userInput.nextLine());
 
             if (mainMenuChoice == 1) {
-//                newAcctMenu();
+                newAcctMenu();
             } else if (mainMenuChoice == 2) {
                 transactionMenu();
             } else if (mainMenuChoice == 3) {
-                superUser();
+                adminUser();
             } else if (mainMenuChoice == 0) {
                 break;
             } else {
@@ -57,30 +57,57 @@ public class WeekendRunner {
         }
     }
 
-//    public static void newAcctMenu() {
-//        WeekendRunner myRunner = new WeekendRunner();
-//        Scanner userInput = new Scanner(System.in);
-//
-//        int menuChoice;
-//        while (true); {
-//            System.out.println("1. Create new checking account");
-//            System.out.println("2. Create new savings account");
-//            System.out.println("3. Create new retirement account");
-//            System.out.println("0. Exit this menu");
-//
-//            menuChoice = Integer.valueOf(userInput.nextLine());
-//
-//            if (menuChoice == 1) {
-//                System.out.println("How much would you like to deposit?");
-//                double amount = Double.valueOf(userInput.nextLine());
-//                myRunner.myBank.getBankAccount().setInitialBalance(amount);
-//            } else if (menuChoice == 2) {
-//                System.out.println("How much would you like to withdraw?");
-//                double amount = Double.valueOf(userInput.nextLine());
-//                myRunner.myBank.getBankAccount().withdraw(amount);
-//            }
-//        }
-//    }
+    public static void newAcctMenu() {
+        WeekendRunner myRunner = new WeekendRunner();
+        Scanner userInput = new Scanner(System.in);
+
+        int menuChoice;
+
+        while (true) {
+//          try {
+                System.out.println("1. Create new checking account");
+                System.out.println("2. Create new savings account");
+                System.out.println("3. Create new retirement account");
+                System.out.println("0. Exit this menu");
+
+                menuChoice = Integer.valueOf(userInput.nextLine());
+
+                if (menuChoice == 1) {
+                    System.out.println("What would you like to call this account?");
+                    String acctName = userInput.nextLine();
+                    CheckingAccount newCheckingAcct = new CheckingAccount();
+                    newCheckingAcct.setAccountName(acctName);
+                    System.out.println("How much would you like to deposit?");
+                    double initialDeposit = Double.valueOf(userInput.nextLine());
+                    myRunner.myBank.getBankAccount().setInitialBalance(initialDeposit);
+                } else if (menuChoice == 2) {
+                    System.out.println("What would you like to call this account?");
+                    String acctName = userInput.nextLine();
+                    SavingsAccount newSavingsAcct = new SavingsAccount();
+                    newSavingsAcct.setAccountName(acctName);
+                    System.out.println("How much would you like to deposit?");
+                    double initialDeposit = Double.valueOf(userInput.nextLine());
+                    myRunner.myBank.getBankAccount().setInitialBalance(initialDeposit);
+                } else if (menuChoice == 3) {
+                    System.out.println("What would you like to call this account?");
+                    String acctName = userInput.nextLine();
+                    RetirementAccount newRetirementAcct = new RetirementAccount();
+                    newRetirementAcct.setAccountName(acctName);
+                    System.out.println("How much would you like to deposit?");
+                    double initialDeposit = Double.valueOf(userInput.nextLine());
+                    myRunner.myBank.getBankAccount().setInitialBalance(initialDeposit);
+                } else if (menuChoice == 0) {
+                    mainMenu();
+                } else {
+                    System.out.println("Invalid selection. Please try again.");
+                }
+//          }
+//          catch (Exception exception) {
+//              System.out.println("An error has occured");
+//              exception.printStackTrace();
+//          }
+        }
+    }
 
     public static void transactionMenu() {
         Scanner userInput = new Scanner(System.in);
@@ -88,6 +115,9 @@ public class WeekendRunner {
 
         int bankingChoice;
         while (true) {
+            System.out.println("Which account would you like to view?");
+
+
             System.out.println("\n1. Deposit Money");
             System.out.println("2. Withdraw Money");
             System.out.println("3. Print balance information");
@@ -120,7 +150,7 @@ public class WeekendRunner {
         }
     }
 
-    public static void superUser() {
+    public static void adminUser() {
         Scanner userInput = new Scanner(System.in);
         WeekendRunner myRunner = new WeekendRunner();
 

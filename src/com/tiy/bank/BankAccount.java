@@ -12,7 +12,7 @@ public class BankAccount {
     private double initialBalance = 0.0;
     private double balance = 0.0;
     private String holderName;
-    private String accountType;
+    private String accountName;
     private LocalDateTime accountCreation = LocalDateTime.now();
     private LocalDateTime lastTransaction = LocalDateTime.now();
     DateTimeFormatter localFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
@@ -40,14 +40,12 @@ public class BankAccount {
         this.holderName = holderName;
     }
 
-    public String getAccountType() {
-        return accountType;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-        System.out.println("Thanks for opening your " + accountType + " account, " + holderName);
-        System.out.println("Your account was opened "+ accountCreation.format(localFormat));
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public LocalDateTime getAccountCreation() {
@@ -77,7 +75,7 @@ public class BankAccount {
 //    }
 
     public void printInfo() {
-        System.out.println("Your " + accountType + " account " + balance + " is $" + balance + ".");
+        System.out.println("Your " + accountName + " account " + balance + " is $" + balance + ".");
         System.out.println("Your account was opened " + accountCreation.format(localFormat));
         System.out.println("Your last transaction was " + lastTransaction.format(localFormat));
     }
@@ -85,7 +83,7 @@ public class BankAccount {
     public double deposit(double depositAmount) {
         lastTransaction = LocalDateTime.now();
         balance += depositAmount;
-        System.out.println("Thank you " + holderName + " ." + "Your balance is $" + balance + " as of " + lastTransaction.format(localFormat) + ".");
+        System.out.println("Thank you " + holderName + " ." + " Your balance is $" + balance + " as of " + lastTransaction.format(localFormat) + ".");
         return balance;
     }
     public double withdraw(double withdrawAmount) {
@@ -94,6 +92,11 @@ public class BankAccount {
         System.out.println("Your balance is now $" + balance + " as of " + lastTransaction.format(localFormat) + ".");
         return balance;
     }
+
+//    public double transfer(double transferAmount) {
+//        lastTransaction = LocalDateTime.now();
+//        balance
+//    }
 
 
 }
