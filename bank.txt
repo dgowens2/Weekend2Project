@@ -1,3 +1,0 @@
-Account Holder: null
-Account Name: null
-Account Balance: 500.0

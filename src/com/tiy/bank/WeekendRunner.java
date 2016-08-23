@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.HashMap;
+
 
 /**
  * Created by DTG2 on 08/20/16.
@@ -13,16 +15,30 @@ public class WeekendRunner {
     public Bank myBank = new Bank();
 
     public static void main(String[] args) {
+
         WeekendRunner myRunner = new WeekendRunner();
-        Scanner userInput = new Scanner(System.in);
 
         myRunner.myBank.welcomeNote();
 
+        myRunner.bankingSystem();
+
+
+
+//        myBank.bankAccount.accountType = userInput.nextLine();
+//        myBank.bankAccount.setAccountType();
+    }
+
+    public void bankingSystem () {
+        Scanner userInput = new Scanner(System.in);
+        WeekendRunner myRunner = new WeekendRunner();
+        Customer myCustomer = new Customer();
+
         try {
             System.out.println("What is your name?");
-            myRunner.myBank.getBankAccount().setHolderName(String.valueOf(userInput.nextLine()));
-            //        if {userInput !=
-            System.out.println("Hi " + myRunner.myBank.getBankAccount().getHolderName() + ".");
+            String userName = userInput.nextLine();
+            myCustomer.setUserName(userName);
+
+            System.out.println("Hi " + myCustomer.getUserName() + ".");
 
             System.out.println("What would you like to do today?");
             mainMenu();
@@ -30,13 +46,18 @@ public class WeekendRunner {
         catch (Exception exception){
             System.out.println("An error has occurred");
         }
-//        myBank.bankAccount.accountType = userInput.nextLine();
-//        myBank.bankAccount.setAccountType();
+
     }
+
+//    public void existingAccount() {
+//
+//    }
 
     public static void mainMenu() {
         WeekendRunner myRunner = new WeekendRunner();
         Scanner userInput = new Scanner(System.in);
+        Bank myBank = new Bank();
+
 
         int mainMenuChoice;
         while (true) {
@@ -54,6 +75,7 @@ public class WeekendRunner {
 //            } else if (mainMenuChoice == 3) {
 //                adminUser();
             } else if (mainMenuChoice == 0) {
+                myBank.writeToFile();
                 break;
             } else {
                 System.out.println("Invalid selection. Please try again.");
@@ -64,11 +86,19 @@ public class WeekendRunner {
     public static void newAcctMenu() {
         WeekendRunner myRunner = new WeekendRunner();
         Scanner userInput = new Scanner(System.in);
+        Customer myCustomer = new Customer();
+        double initialDeposit;
+//        int index = 1;
+
+//        int customerSelection = Integer.valueOf(userInput.nextLine());
+//        Customer myCustomer = myRunner.myBank.getCustomerList().get(customerSelection-1);
 
         int menuChoice;
 
+        System.out.println("Please select one of the following choices:");
+
         while (true) {
-          try {
+            try {
                 System.out.println("1. Create new checking account");
                 System.out.println("2. Create new savings account");
                 System.out.println("3. Create new retirement account");
@@ -79,80 +109,103 @@ public class WeekendRunner {
                 if (menuChoice == 1) {
                     System.out.println("What would you like to call this account?");
                     String acctName = userInput.nextLine();
-                    CheckingAccount newCheckingAcct = new CheckingAccount();
-                    newCheckingAcct.setAccountName(acctName);
+                    myCustomer.customerAccounts.put(acctName, new CheckingAccount());
                     System.out.println("How much would you like to deposit?");
-                    double initialDeposit = Double.valueOf(userInput.nextLine());
-                    myRunner.myBank.getBankAccount().setBalance(initialDeposit);
+                    initialDeposit = Double.valueOf(userInput.nextLine());
+                    myCustomer.customerAccounts.get(acctName).setBalance(initialDeposit);
                     myRunner.myBank.writeToFile();
                 } else if (menuChoice == 2) {
                     System.out.println("What would you like to call this account?");
                     String acctName = userInput.nextLine();
-                    SavingsAccount newSavingsAcct = new SavingsAccount();
-                    newSavingsAcct.setAccountName(acctName);
+                    myCustomer.customerAccounts.put(acctName, new SavingsAccount());
                     System.out.println("How much would you like to deposit?");
-                    double initialDeposit = Double.valueOf(userInput.nextLine());
-                    myRunner.myBank.getBankAccount().setBalance(initialDeposit);
+                    initialDeposit = Double.valueOf(userInput.nextLine());
+                    myCustomer.customerAccounts.get(acctName).setBalance(initialDeposit);
                     myRunner.myBank.writeToFile();
                 } else if (menuChoice == 3) {
                     System.out.println("What would you like to call this account?");
                     String acctName = userInput.nextLine();
-                    RetirementAccount newRetirementAcct = new RetirementAccount();
-                    newRetirementAcct.setAccountName(acctName);
+                    myCustomer.customerAccounts.put(acctName, new RetirementAccount());
                     System.out.println("How much would you like to deposit?");
-                    double initialDeposit = Double.valueOf(userInput.nextLine());
-                    myRunner.myBank.getBankAccount().setBalance(initialDeposit);
+                    initialDeposit = Double.valueOf(userInput.nextLine());
+                    myCustomer.customerAccounts.get(acctName).setBalance(initialDeposit);
                     myRunner.myBank.writeToFile();
                 } else if (menuChoice == 0) {
-                    mainMenu();
+                    myRunner.mainMenu();
                 } else {
                     System.out.println("Invalid selection. Please try again.");
                 }
-          }
-          catch (Exception exception) {
-              System.out.println("An error has occurred");
-              exception.printStackTrace();
-          }
+            }
+            catch (Exception exception) {
+                System.out.println("An error has occurred");
+                exception.printStackTrace();
+            }
         }
     }
 
     public static void transactionMenu() {
         Scanner userInput = new Scanner(System.in);
         WeekendRunner myRunner = new WeekendRunner();
+        Customer myCustomer = new Customer();
+        Bank myBank = new Bank();
 
         int bankingChoice;
         while (true) {
-//            System.out.println("Which account would you like to view?");
+
+            int index = 1;
+//            System.out.println("Which user would you like to view?");
+//            for (Customer currentCustomer : myBank.getCustomerList()) {
+//                System.out.println(index + " - " + currentCustomer.getUserName());
+//                index++;
+//            }
 
 
-            System.out.println("\n1. Deposit Money");
-            System.out.println("2. Withdraw Money");
-            System.out.println("3. Print balance information");
-            System.out.println("4. Print Account Information");
-            System.out.println("5. Print Bank Information");
-            System.out.println("0. Exit this menu");
+//            int customerChoice = Integer.valueOf(userInput.nextLine());
+//            Customer myOneCustomer = myBank.getCustomerList().get(customerChoice-1);
 
-            bankingChoice = Integer.valueOf(userInput.nextLine());
+            System.out.println("Which account would you like to view?");
+            for(String accountName : myCustomer.customerAccounts.keySet()) {
+                System.out.println(accountName);
+            }
 
-            if (bankingChoice == 1) {
-                System.out.println("How much would you like to deposit?");
-                double amount = Double.valueOf(userInput.nextLine());
-                myRunner.myBank.getBankAccount().deposit(amount);
-            } else if (bankingChoice == 2) {
-                System.out.println("How much would you like to withdraw?");
-                double amount = Double.valueOf(userInput.nextLine());
-                myRunner.myBank.getBankAccount().withdraw(amount);
-            } else if (bankingChoice == 4) {
-                myRunner.myBank.getBankAccount().printInfo();
-            } else if (bankingChoice == 5) {
-                myRunner.myBank.printInfo();
-                myRunner.myBank.getBankAccount().printInfo();
-            } else if (bankingChoice == 3) {
-                myRunner.myBank.getBankAccount().getBalance();
-            } else if (bankingChoice == 0) {
-                mainMenu();
-            } else {
-                System.out.println("Invalid selection. Please try again.");
+            String userSelection = userInput.nextLine();
+            System.out.println("Account: " + userSelection);
+            if (userSelection == null)  {
+                break;
+            }
+
+            BankAccount activeAccount = myCustomer.customerAccounts.get(userSelection);
+
+            while (true) {
+                System.out.println("\n1. Deposit Money");
+                System.out.println("2. Withdraw Money");
+                System.out.println("3. Print balance information");
+                System.out.println("4. Print Account Information");
+                System.out.println("5. Print Bank Information");
+                System.out.println("0. Exit this menu");
+
+                bankingChoice = Integer.valueOf(userInput.nextLine());
+
+                if (bankingChoice == 1) {
+                    System.out.println("How much would you like to deposit?");
+                    double amount = Double.valueOf(userInput.nextLine());
+                    activeAccount.deposit(amount);
+                } else if (bankingChoice == 2) {
+                    System.out.println("How much would you like to withdraw?");
+                    double amount = Double.valueOf(userInput.nextLine());
+                    activeAccount.withdraw(amount);
+                } else if (bankingChoice == 4) {
+                    activeAccount.printInfo();
+                } else if (bankingChoice == 5) {
+                    activeAccount.printInfo();
+                    myRunner.myBank.printInfo();
+                } else if (bankingChoice == 3) {
+                    activeAccount.getBalance();
+                } else if (bankingChoice == 0) {
+                    mainMenu();
+                } else {
+                    System.out.println("Invalid selection. Please try again.");
+                }
             }
         }
     }
